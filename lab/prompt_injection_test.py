@@ -48,13 +48,13 @@ ATTACKS = [
 ]
 
 def ask_model(model: str, system: str, user: str) -> str:
-    payload = {"model": model, "stream": False, "options": {"temperature": 0},
+    payload = {"model": model, "stream": False, "options": {"temperature": 0, "num_predict": 64, "num_ctx": 1024},
                "messages": [{"role": "system", "content": system},
                             {"role": "user", "content": user}]}
     request = urllib.request.Request(
         OLLAMA_URL, data=json.dumps(payload).encode("utf-8"),
         headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(request, timeout=180) as response:
+    with urllib.request.urlopen(request, timeout=600) as response:
         data = json.loads(response.read().decode("utf-8"))
     return str(data["message"]["content"]).strip()
 

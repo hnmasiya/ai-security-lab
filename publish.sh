@@ -16,11 +16,7 @@ command -v git >/dev/null || { echo "ERROR: Git is required." >&2; exit 1; }
 command -v python3 >/dev/null || { echo "ERROR: Python 3 is required." >&2; exit 1; }
 
 cd "$ROOT"
-# Never publish generated evidence or local environment files.
-if find logs results -type f ! -name '.gitkeep' -print -quit 2>/dev/null | grep -q .; then
-  echo "ERROR: logs/ or results/ contains generated files. Review/redact them first." >&2
-  exit 1
-fi
+# Generated logs and results are excluded from the publication archive.
 if find . -type f \( -name '.env' -o -name '.env.*' \) -not -path './.git/*' -print -quit | grep -q .; then
   echo "ERROR: Environment file detected. Remove it from the publication folder." >&2
   exit 1
@@ -40,6 +36,9 @@ git clone "$REMOTE" "$WORK/repo"
 (
   cd "$ROOT"
   tar --exclude='./.git' --exclude='./logs/*' --exclude='./results/*' \
+      --exclude='*/prompt_injection_test.py.backup' \
+      --exclude='*/prompt_injection_test.pilot-backup' \
+      --exclude='./publish.sh.pre-report-backup' \
       --exclude='./__pycache__' --exclude='*/__pycache__' \
       -cf - .
 ) | tar -xf - -C "$WORK/repo"
