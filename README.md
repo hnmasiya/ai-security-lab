@@ -5,7 +5,7 @@ Part of my cybersecurity portfolio: [hnmasiya/cybersecurity-portfolio](https://g
 A safe, local portfolio lab applying concepts from **AI Cybersecurity and Governance**
 (Columbia+ / Columbia Engineering, October 2026).
 
-Credential: [View and verify the Columbia+ digital badge](https://badges.plus.columbia.edu/c291f4f2-a326-4a4f-ba4f-b9fc6d981b85)
+Credential: https://www.credential.net/c291f4f2-a326-4a4f-ba4f-b9fc6d981b85
 
 > **Evidence status:** Project scaffold and offline unit tests are prepared. Live LLM
 > attack outcomes are intentionally not claimed until Ollama tests have actually run
