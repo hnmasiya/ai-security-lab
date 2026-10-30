@@ -1,0 +1,6 @@
+Oct 30 08:55:01 dnsmasq[812]: query[A] www.google.com from 192.168.1.20
+Oct 30 09:01:12 dnsmasq[812]: query[A] chatgpt.com from 192.168.1.23
+Oct 30 09:04:40 dnsmasq[812]: query[A] intranet.example.local from 192.168.1.21
+Oct 30 09:10:03 dnsmasq[812]: query[A] gemini.google.com from 192.168.1.25
+Oct 30 09:12:44 dnsmasq[812]: query[A] claude.ai from 192.168.1.23
+Oct 30 09:20:09 dnsmasq[812]: query[A] api.deepseek.com from 192.168.1.30
