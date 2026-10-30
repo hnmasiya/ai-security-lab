@@ -1,0 +1,39 @@
+title: AI Assistant - Prompt Injection Instruction Override
+id: 1a4d7f20-8f9d-4e71-9b5a-6f9d9c4e1001
+status: experimental
+description: Example application-log rule for common instruction override phrases.
+author: AI Cybersecurity & Governance Lab
+date: 2026/10/30
+logsource:
+  product: ai_assistant
+  category: application
+detection:
+  selection:
+    prompt|contains:
+      - 'ignore all previous instructions'
+      - 'ignore previous instructions'
+      - 'disregard your instructions'
+      - 'you have no restrictions'
+  condition: selection
+falsepositives:
+  - Security testing and awareness training
+level: medium
+tags:
+  - attack.initial_access
+---
+title: AI Assistant - Synthetic Canary Exposure
+id: 2b5e8a31-9a0e-4f82-8c6b-7a0e0d5f2002
+status: experimental
+description: Detects a synthetic lab canary in an assistant response.
+author: AI Cybersecurity & Governance Lab
+date: 2026/10/30
+logsource:
+  product: ai_assistant
+  category: application
+detection:
+  selection:
+    response|contains: 'CANARY-7731-DO-NOT-REVEAL'
+  condition: selection
+falsepositives:
+  - None expected in this fictional lab; validate before production use
+level: high
