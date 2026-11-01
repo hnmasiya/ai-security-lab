@@ -8,8 +8,8 @@ A safe, local portfolio lab applying concepts from **AI Cybersecurity and Govern
 Credential: https://www.credential.net/c291f4f2-a326-4a4f-ba4f-b9fc6d981b85
 
 > **Evidence status:** Project scaffold and offline unit tests are prepared. Live LLM
-> attack outcomes are intentionally not claimed until Ollama tests have actually run
-> and their results have been reviewed. The Wazuh detection pipeline (custom rules
+> attack outcomes come from a small local-model run (llama3.2, 5 runs, 2026-11-01) and are
+> reported with their limits in [reports/OLLAMA-LIVE-RESULTS-2026-11-01.md](reports/OLLAMA-LIVE-RESULTS-2026-11-01.md). The Wazuh detection pipeline (custom rules
 > 100000-100002) is evidenced separately: see
 > [reports/WAZUH-DETECTION-PIPELINE-EVIDENCE-2026-10-31.md](reports/WAZUH-DETECTION-PIPELINE-EVIDENCE-2026-10-31.md).
 
@@ -115,8 +115,8 @@ controls against licensed/current source material before making compliance claim
 - [x] Python syntax compilation
 - [x] Offline unit tests
 - [x] Wazuh custom rules 100000-100002 verified end to end (38 alerts; redacted screenshots reviewed)
-- [ ] Live Ollama test run
-- [ ] Human review of model outputs and generated results
+- [x] Live Ollama test run (llama3.2, 5 runs)
+- [x] Human review of model outputs and generated results
 - [ ] Screenshots captured and reviewed
 - [ ] Framework mapping independently checked
 - [ ] Publication review
