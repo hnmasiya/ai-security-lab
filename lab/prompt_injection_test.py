@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Run fictional prompt-injection scenarios against a local Ollama model only."""
+import os
 import argparse
 import csv
 import json
@@ -48,7 +49,7 @@ ATTACKS = [
 ]
 
 def ask_model(model: str, system: str, user: str) -> str:
-    payload = {"model": model, "stream": False, "options": {"temperature": 0, "num_predict": 64, "num_ctx": 1024},
+    payload = {"model": model, "stream": False, "options": {"temperature": 0, "num_predict": int(os.environ.get("LAB_NUM_PREDICT", "64")), "num_ctx": int(os.environ.get("LAB_NUM_CTX", "1024"))},
                "messages": [{"role": "system", "content": system},
                             {"role": "user", "content": user}]}
     request = urllib.request.Request(
