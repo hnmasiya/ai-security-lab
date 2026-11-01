@@ -9,7 +9,9 @@ Credential: https://www.credential.net/c291f4f2-a326-4a4f-ba4f-b9fc6d981b85
 
 > **Evidence status:** Project scaffold and offline unit tests are prepared. Live LLM
 > attack outcomes are intentionally not claimed until Ollama tests have actually run
-> and their results have been reviewed.
+> and their results have been reviewed. The Wazuh detection pipeline (custom rules
+> 100000-100002) is evidenced separately: see
+> [reports/WAZUH-DETECTION-PIPELINE-EVIDENCE-2026-10-31.md](reports/WAZUH-DETECTION-PIPELINE-EVIDENCE-2026-10-31.md).
 
 ## Objectives
 
@@ -50,7 +52,8 @@ ollama pull llama3.2
 ollama serve
 # In another terminal, from this repository:
 python3 lab/prompt_injection_test.py --model llama3.2
-python3 detection/detect_injection.py logs/ai_assistant.jsonl\npython3 detection/detect_injection.py detection/sample_ai_events.jsonl
+python3 detection/detect_injection.py logs/ai_assistant.jsonl
+python3 detection/detect_injection.py detection/sample_ai_events.jsonl
 python3 detection/shadow_ai_scan.py detection/sample_dns.log
 python3 -m unittest discover -s tests -v
 ```
@@ -68,6 +71,9 @@ offline unit tests remain runnable.
 | `detection/detect_injection.py` | JSONL event scanner |
 | `detection/injection_detection.yml` | Sigma-style application-log detection examples (not a validated Sigma backend rule) |
 | `detection/shadow_ai_scan.py` | DNS log scanner for fictional Shadow AI indicators |
+| `wazuh/` | Custom rules 100000-100002, ossec localfile config and setup README |
+| `reports/WAZUH-DETECTION-PIPELINE-EVIDENCE-2026-10-31.md` | Evidence report (38 alerts, redacted) |
+| `screenshots/wazuh/` | Six redacted Discover and manager screenshots |
 | `detection/sample_dns.log` | Synthetic DNS events |
 | `tests/` | Offline unit tests |
 | `ai-inventory.md` | Fictional AI inventory / AI-BOM template |
@@ -108,6 +114,7 @@ controls against licensed/current source material before making compliance claim
 - [x] Project files generated
 - [x] Python syntax compilation
 - [x] Offline unit tests
+- [x] Wazuh custom rules 100000-100002 verified end to end (38 alerts; redacted screenshots reviewed)
 - [ ] Live Ollama test run
 - [ ] Human review of model outputs and generated results
 - [ ] Screenshots captured and reviewed
