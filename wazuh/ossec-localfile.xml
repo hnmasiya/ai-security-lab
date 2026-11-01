@@ -1,0 +1,5 @@
+<!-- Add inside <ossec_config> in /var/ossec/etc/ossec.conf on the Wazuh Manager -->
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/ossec/logs/ai-security-lab.jsonl</location>
+</localfile>
