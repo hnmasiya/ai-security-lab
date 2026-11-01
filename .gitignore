@@ -10,3 +10,8 @@ screenshots/*
 !screenshots/.gitkeep
 .env
 .env.*
+
+# evidence images (redacted), added by publish-to-github.sh
+!screenshots/
+!screenshots/wazuh/
+!screenshots/wazuh/*.png
