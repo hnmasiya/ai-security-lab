@@ -115,7 +115,7 @@ controls against licensed/current source material before making compliance claim
 - [x] Python syntax compilation
 - [x] Offline unit tests
 - [x] Wazuh custom rules 100000-100002 verified end to end (38 alerts; redacted screenshots reviewed)
-- [x] Live Ollama test run (llama3.2, 5 runs)
+- [x] Live Ollama test runs (llama3.2: five runs at the default 64-token limit, three longer-output runs at 256 tokens)
 - [x] Human review of model outputs and generated results
 - [ ] Screenshots captured and reviewed
 - [ ] Framework mapping independently checked
