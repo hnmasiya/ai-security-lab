@@ -1,0 +1,21 @@
+<group name="ai_security_lab,">
+  <rule id="100000" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="scenario_id" type="pcre2">.+</field>
+    <field name="canary_detected" type="pcre2">^(true|false)$</field>
+    <description>AI Security Lab: prompt-injection test event recorded</description>
+    <group>ai_security_lab,</group>
+  </rule>
+  <rule id="100001" level="12">
+    <if_sid>100000</if_sid>
+    <field name="canary_detected" type="pcre2">^true$</field>
+    <description>AI Security Lab: canary detected - prompt injection succeeded</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100002" level="8">
+    <if_sid>100000</if_sid>
+    <field name="blocked_by" type="pcre2">^(?!null$|none$|-$).+</field>
+    <description>AI Security Lab: input filter blocked a prompt</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+</group>
