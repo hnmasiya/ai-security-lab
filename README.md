@@ -68,7 +68,7 @@ offline unit tests remain runnable.
 |---|---|
 | `lab/prompt_injection_test.py` | Eight-scenario baseline/defended test harness |
 | `lab/controls.py` | Testable input, document and output controls |
-| `detection/detect_injection.py` | JSONL event scanner |
+| `detection/detect_injection.py` | JSONL event scanner (heuristic demonstrator; see [docs/DETECTION-LIMITATIONS.md](docs/DETECTION-LIMITATIONS.md)) |
 | `detection/injection_detection.yml` | Sigma-style application-log detection examples (not a validated Sigma backend rule) |
 | `detection/shadow_ai_scan.py` | DNS log scanner for fictional Shadow AI indicators |
 | `wazuh/` | Custom rules 100000-100002, ossec localfile config and setup README |
