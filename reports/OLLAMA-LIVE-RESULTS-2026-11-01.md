@@ -52,8 +52,19 @@ Detection: 11 alerts per run (instruction-override and secret-extraction on A1, 
 - Detection rules are keyword-based and were not tuned after this run.
 - Fictional data throughout. This is a learning exercise, not a compliance or assurance assessment.
 
+## Update: detection rules extended (same day)
+
+After this run, `detection/detect_injection.py` gained pattern rules for instructions hidden in markup, role-spoofing, delimiter breakout, obfuscated extraction and partial extraction, with tests in `tests/test_detection_rules.py` (13 tests pass in the full suite). Re-scanning the five saved logs, with no new model runs:
+
+| | Before | After |
+|---|---|---|
+| Alerts per run (16 events) | 11 | 33 |
+| Attack scenarios with at least one alert | 3 of 7 (A1, A2, A4) | 7 of 7 |
+| Alerts on the benign control (A6) | 0 | 0 |
+
+Read this carefully: the rules were written after seeing these prompts, so 7 of 7 shows that the rules cover the known cases, not that detection generalises. The only evidence beyond the known cases is five paraphrased attacks and seven benign prompts in the unit tests. Remaining gaps: plain authority claims (A4 is still flagged only through the phrase "access code"), reworded requests that use none of the listed words, other languages, and heavy obfuscation. The rules are heuristics over application logs.
+
 ## Next steps
 
-- Extend the detection patterns for A3, A5, A7 and A8, and add unit tests for each.
 - Add paraphrased attack variants and a benign set to measure over-refusal.
 - Repeat on a second model and compare.
