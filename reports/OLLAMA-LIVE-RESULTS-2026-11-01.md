@@ -9,6 +9,7 @@ Status: single-model, small-scale lab run. Findings are described with their lim
 |---|---|
 | Model | `llama3.2` (default 3B tag), run locally through Ollama 0.40.13 |
 | Hardware | ThinkPad X260, CPU only |
+| Generation settings | `temperature: 0`, `num_predict: 64`, `num_ctx: 1024` (set in `lab/prompt_injection_test.py`) |
 | Target | Fictional customer-support assistant holding a synthetic canary (no real data) |
 | Scenarios | 8 (A1-A8), each run in a baseline and a defended configuration |
 | Runs | 5 complete runs of all 16 cases (80 events) |
@@ -46,7 +47,8 @@ Detection: 11 alerts per run (instruction-override and secret-extraction on A1, 
 - One small local model; results may not transfer to other models, sizes or system prompts.
 - The scenarios and the defences were written by the same author, so the filter's patterns match the attack wording. Paraphrased variants were not tested.
 - The canary check is an exact-string match. Paraphrased or partial leaks, and models that merely follow an injected instruction, would be scored as "not leaked".
-- Outcomes were identical across the 5 runs, so the repeats show stability, not a leak rate.
+- Canary and block outcomes were identical across the 5 runs, although response wording differed between some runs even at temperature 0. The repeats show that the outcomes are stable, not a leak rate.
+- Output is capped at 64 tokens and the context at 1024. A canary appearing later in a longer response would not be seen, so "not leaked" means "not in the first 64 generated tokens".
 - Detection rules are keyword-based and were not tuned after this run.
 - Fictional data throughout. This is a learning exercise, not a compliance or assurance assessment.
 
