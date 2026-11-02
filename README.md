@@ -116,8 +116,7 @@ controls against licensed/current source material before making compliance claim
 - [x] Offline unit tests
 - [x] Wazuh custom rules 100000-100002 verified end to end (38 alerts; redacted screenshots reviewed)
 - [x] Live Ollama test runs (llama3.2: five runs at the default 64-token limit, three longer-output runs at 256 tokens)
-- [x] Human review of the three 256-token runs (per-run review checklists completed on 2 November 2026)
-- [ ] Human review of the five 64-token runs (review checklists not yet completed)
+- [x] Human review of model outputs: all eight live runs (five 64-token, three 256-token), per-run review checklists completed on 2 November 2026
 - [ ] Screenshots captured and reviewed
 - [ ] Framework mapping independently checked
 - [ ] Publication review
