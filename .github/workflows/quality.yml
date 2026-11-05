@@ -26,3 +26,4 @@ jobs:
           python detection/detect_injection.py detection/sample_ai_events.jsonl
           python detection/shadow_ai_scan.py detection/sample_dns.log
           python detection/evaluate_scanner.py --split heldout
+          python detection/evaluate_rules.py --split heldout
