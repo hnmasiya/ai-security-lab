@@ -13,7 +13,8 @@ Tested with Wazuh 4.14.7 (single-node, Docker Compose). Evidence: [`reports/WAZU
 
 | File | Purpose |
 |---|---|
-| `wazuh/rules/ai-security-lab.xml` | Rules 100000-100002 |
+| `wazuh/rules/ai-security-lab.xml` | Rules 100000-100002 (flag-based) |
+| `wazuh/rules/ai-security-lab-content.xml` | Rules 100010-100021 (content-based, match `prompt_normalised`); see `docs/CONTENT-RULES.md`. Offline-tested only; run `wazuh-logtest` before relying on them |
 | `wazuh/ossec-localfile.xml` | `<localfile>` block that makes Wazuh read the telemetry file |
 
 ## Rules

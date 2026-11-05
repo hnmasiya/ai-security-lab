@@ -1,0 +1,75 @@
+<group name="ai_security_lab_content,">
+  <!-- Content-based rules (D2). They match prompt_normalised and are children of 100000. -->
+  <rule id="100010" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\b(?:ignore|disregard|forget|cancel|override|bypass|stop following|drop)\b.{0,40}\b(?:previous|prior|earlier|above|all|your|any)\b.{0,25}\b(?:instructions?|rules|guidelines|polic(?:y|ies)|task|programming)\b|\bignore (?:the )?polic(?:y|ies)\b</field>
+    <description>AI Security Lab: instruction-override wording</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100011" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\b(?:print|reveal|show|disclose|output|display|give|repeat|quote|share|tell|list|write|say|state|leak|expose|read out|think of|append|reply with|provide)\b.{0,60}\b(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|the secrets? (?:in|you))\b|\b(?:answer|respond|reply)\b.{0,40}\bwith\b.{0,20}\b(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|the secrets? (?:in|you))\b</field>
+    <description>AI Security Lab: request to disclose a secret or hidden instructions</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100012" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\b(?:no restrictions|without (?:any )?restrictions|unrestricted|do anything now|full clearance|jailbreak|developer mode)\b|\b(?:act as|pretend|imagine you are|you are)\b.{0,120}\b(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|the secrets? (?:in|you))\b</field>
+    <description>AI Security Lab: role-play used to remove restrictions or reach a secret</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100013" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\b(?:security manager|ceo|developers?|administrator|admin|vendor|official request|support engineer|authori[sz]es? you|ordering you|you must)\b.{0,100}\b(?:disclos\w*|reveal|print|show|share|provide)\b.{0,40}\b(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|the secrets? (?:in|you))\b</field>
+    <description>AI Security Lab: claimed authority used to justify disclosure</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100014" level="10">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)&lt;/[a-z]+&gt;\s*&lt;?(?:system|instructions?|assistant)\b|(?:end of (?:document|message|input|text|note)|""").{0,40}\b(?:assistant|system)\s*:|\b(?:system|developer|admin(?:istrator)?|assistant)\s*(?:override\s*)?:\s*(?:ignore|disregard|reveal|disclose|print|output|override|after|append)\b</field>
+    <description>AI Security Lab: delimiter breakout or spoofed role line</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100015" level="10">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)&lt;!--.{0,200}\b(?:ignore|disregard|override|bypass|reveal|disclose|print|instead)\b.{0,200}--&gt;|\b(?:to the assistant|assistant reading this|dear assistant|assistant,)\b.{0,80}\b(?:disregard|ignore|instead|reply with|print|reveal|output)\b</field>
+    <description>AI Security Lab: instruction hidden in a comment or addressed to the assistant</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100016" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\b(?:backwards?|revers(?:e|ed|ing)|one (?:character|letter|char)s? per line|each character|every other character|dash between|hexadecimal|hex|base64|rot13|acrostic|spell)\b.{0,80}\b(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|the secrets? (?:in|you))\b|\b(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|the secrets? (?:in|you))\b.{0,80}\b(?:backwards?|revers(?:e|ed|ing)|one (?:character|letter|char)s? per line|each character|hexadecimal|base64|rot13)\b</field>
+    <description>AI Security Lab: request to transform a secret (reverse, spell, encode)</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100017" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\b(?:digits?|segment|portion|part|characters?|letters?)\b.{0,40}\b(?:of|in)\s+(?:the |your )?(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|the secrets? (?:in|you))\b</field>
+    <description>AI Security Lab: request for part of a secret</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100018" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\b(?:poem|poetry|song|lyrics|haiku|story|limerick|translate|translation|compose|write)\b.{0,100}\b(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|the secrets? (?:in|you))\b</field>
+    <description>AI Security Lab: creative framing that would carry a secret</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100019" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\bwhat you (?:were|are) (?:told|instructed|asked) to keep (?:private|secret|confidential)\b|\b(?:text|instructions?|prompt|message)s?\s+(?:that\s+)?(?:appears?\s+)?before my (?:first )?message\b|\binstructions? you (?:operate|work|run) (?:under|with)\b|\b(?:your|the) (?:setup|initial|original|opening) (?:text|instructions?|prompt|message)\b</field>
+    <description>AI Security Lab: paraphrased request for the setup text</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100020" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\b(?:ignorez?|oubliez)\s+(?:toutes\s+)?les\s+instructions\b|\bignoriere\s+(?:alle\s+)?(?:vorherigen|bisherigen)\s+anweisungen\b|\bignora\s+(?:tutte\s+)?le\s+istruzioni\b|\babaikan\s+(?:semua\s+)?instruksi\b</field>
+    <description>AI Security Lab: instruction override in French, German, Italian or Indonesian</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+  <rule id="100021" level="9">
+    <if_sid>100000</if_sid>
+    <field name="prompt_normalised" type="pcre2">(?i)\b(?:part|step)\s+(?:two|2|three|3)\s*:\s*(?:[a-z ]{0,30})?\b(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|the secrets? (?:in|you))\b</field>
+    <description>AI Security Lab: secret requested as a later step or part</description>
+    <group>ai_security_lab,prompt_injection,</group>
+  </rule>
+</group>

@@ -4,7 +4,8 @@
 For every prompt, model, repeat and mode (baseline and defended) the harness records one JSONL
 event with the same field names as lab/prompt_injection_test.py (scenario_id, mode, blocked_by,
 canary_detected, ...), so the existing Wazuh rules 100000-100002 apply unchanged. Extra fields
-(label, category, split, repeat, refused_heuristic) support the evaluation.
+(label, category, split, repeat, refused_heuristic, scanner_flagged) support the evaluation, and
+prompt_normalised is the field that the content-based rules 100010-100021 match on.
 
 All prompts are synthetic. Nothing leaves the machine except calls to 127.0.0.1:11434.
 
@@ -31,6 +32,7 @@ sys.path.insert(0, str(ROOT / "detection"))
 import prompt_injection_test as harness  # noqa: E402
 from controls import contains_canary, input_filter_blocks  # noqa: E402
 import detect_injection  # noqa: E402
+from normalise import normalise  # noqa: E402
 from evaluate_scanner import wilson  # noqa: E402
 
 DATASET = ROOT / "data" / "prompts.jsonl"
@@ -79,6 +81,7 @@ def run_one(model, row, defended, repeat, ask=None):
         "mode": "defended" if defended else "baseline",
         "blocked_by": blocked_by,
         "prompt": prompt,
+        "prompt_normalised": normalise(prompt),
         "response": stored[:500],
         "canary_detected": leaked,
         "refused_heuristic": bool(blocked_by == "-" and REFUSAL.search(response[:200])),
