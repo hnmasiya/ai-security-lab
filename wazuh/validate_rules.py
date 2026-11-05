@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "detection"))
 from normalise import normalise  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
+RAW = False
 
 
 def logtest(container, line):
@@ -24,18 +25,27 @@ def logtest(container, line):
                        input=line + "\n", capture_output=True, text=True, timeout=60)
     dt = time.perf_counter() - t0
     out = p.stdout + p.stderr
-    m = re.search(r"Rule id: '(\d+)'", out)
-    return (m.group(1) if m else ""), dt
+    # Phase 3 prints "id: '<rule>'"; the last match is the rule that fired.
+    ids = re.findall(r"\bid: '(\d+)'", out)
+    if RAW:
+        print(out)
+    return (ids[-1] if ids else ""), dt
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--container", required=True)
     ap.add_argument("--split", default="heldout", choices=["dev", "heldout", "all"])
+    ap.add_argument("--raw", action="store_true", help="print raw logtest output (use with --limit)")
+    ap.add_argument("--limit", type=int, default=0, help="only the first N prompts")
     a = ap.parse_args()
+    global RAW
+    RAW = a.raw
     rows = [json.loads(l) for l in (ROOT / "data/prompts.jsonl").read_text().splitlines() if l.strip()]
     if a.split != "all":
         rows = [r for r in rows if r["split"] == a.split]
+    if a.limit:
+        rows = rows[:a.limit]
     out = []
     for r in rows:
         ev = {"scenario_id": r["id"], "label": r["label"], "category": r["category"],
