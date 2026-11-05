@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Compile Python
-        run: python -m compileall -q lab detection tests
+        run: python -m compileall -q lab detection tests data
       - name: Run offline tests
         run: python -m unittest discover -s tests -v
       - name: Validate synthetic JSONL
@@ -25,3 +25,4 @@ jobs:
         run: |
           python detection/detect_injection.py detection/sample_ai_events.jsonl
           python detection/shadow_ai_scan.py detection/sample_dns.log
+          python detection/evaluate_scanner.py --split heldout
