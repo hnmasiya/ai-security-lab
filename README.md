@@ -68,6 +68,9 @@ offline unit tests remain runnable.
 |---|---|
 | `lab/prompt_injection_test.py` | Eight-scenario baseline/defended test harness |
 | `lab/controls.py` | Testable input, document and output controls |
+| `data/prompts.jsonl`, `data/build_prompts.py` | 192 labelled synthetic prompts (96 attack, 96 benign) with dev and held-out split; see [docs/DATASET.md](docs/DATASET.md) |
+| `lab/run_dataset.py` | Runs the labelled set against local Ollama models (baseline and defended, repeats) |
+| `detection/evaluate_scanner.py` | Scores the keyword scanner on the labelled set (rates with 95% intervals; no model needed) |
 | `detection/detect_injection.py` | JSONL event scanner (heuristic demonstrator; see [docs/DETECTION-LIMITATIONS.md](docs/DETECTION-LIMITATIONS.md)) |
 | `detection/injection_detection.yml` | Sigma-style application-log detection examples (not a validated Sigma backend rule) |
 | `detection/shadow_ai_scan.py` | DNS log scanner for fictional Shadow AI indicators |
