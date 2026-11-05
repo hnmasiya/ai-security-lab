@@ -47,13 +47,15 @@ def main():
     if a.limit:
         rows = rows[:a.limit]
     out = []
-    for r in rows:
+    for i, r in enumerate(rows, 1):
+        print(f"\r{i}/{len(rows)}", end="", flush=True, file=sys.stderr)
         ev = {"scenario_id": r["id"], "label": r["label"], "category": r["category"],
               "prompt": r["prompt"], "prompt_normalised": normalise(r["prompt"]),
               "canary_detected": False, "blocked_by": ""}
         rule, dt = logtest(a.container, json.dumps(ev, ensure_ascii=False))
         out.append({"id": r["id"], "label": r["label"], "category": r["category"],
                     "rule": rule, "seconds": round(dt, 3)})
+    print(file=sys.stderr)
     ts = time.strftime("%Y%m%d_%H%M%S")
     path = ROOT / "results" / f"wazuh_logtest_{ts}.csv"
     with open(path, "w", newline="") as f:
