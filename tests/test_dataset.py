@@ -98,3 +98,16 @@ class RunnerTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Table54Tests(unittest.TestCase):
+    def test_table_from_dry_run_events(self):
+        sys.path.insert(0, str(ROOT / "lab"))
+        import table54
+        rows = [r for r in ROWS if r["split"] == "heldout"][:12]
+        events = [run_dataset.run_one("m", r, d, 1, ask=lambda *a: "ok") for r in rows for d in (False, True)]
+        text = table54.tables(events)
+        self.assertIn("| All attacks |", text)
+        self.assertIn("m baseline", text)
+        self.assertIn("m defended", text)
+
