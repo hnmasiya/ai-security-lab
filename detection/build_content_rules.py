@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate wazuh/rules/ai-security-lab-content.xml (rules 100010-100021) from the table below.
+"""Generate wazuh/rules/ai-security-lab_content.xml (rules 100010-100021) from the table below.
 
 Each rule matches a regular expression against `prompt_normalised`, the field the harness logs
 (see detection/normalise.py). The patterns are written in the PCRE2 subset that Python's `re`
@@ -11,7 +11,7 @@ Usage: python3 detection/build_content_rules.py   (rewrites the XML file)
 from pathlib import Path
 from xml.sax.saxutils import escape
 
-OUT = Path(__file__).resolve().parents[1] / "wazuh" / "rules" / "ai-security-lab-content.xml"
+OUT = Path(__file__).resolve().parents[1] / "wazuh" / "rules" / "ai-security-lab_content.xml"
 
 SN = (r"(?:(?:confidential|hidden|secret|private|internal|staff)\s+(?:marker|code|value|string|token|key|password|"
       r"notes?|instructions?|configuration|config)|access code|staff code|system (?:prompt|setup(?: text)?)|setup text|"

@@ -14,7 +14,7 @@ Tested with Wazuh 4.14.7 (single-node, Docker Compose). Evidence: [`reports/WAZU
 | File | Purpose |
 |---|---|
 | `wazuh/rules/ai-security-lab.xml` | Rules 100000-100002 (flag-based) |
-| `wazuh/rules/ai-security-lab-content.xml` | Rules 100010-100021 (content-based, match `prompt_normalised`); see `docs/CONTENT-RULES.md`. Offline-tested only; run `wazuh-logtest` before relying on them |
+| `wazuh/rules/ai-security-lab_content.xml` | Rules 100010-100021 (content-based, match `prompt_normalised`); see `docs/CONTENT-RULES.md`. Offline-tested only; run `wazuh-logtest` before relying on them |
 | `wazuh/ossec-localfile.xml` | `<localfile>` block that makes Wazuh read the telemetry file |
 
 ## Rules
@@ -61,3 +61,11 @@ Expected: rule 100001. Use `"canary_detected":false,"blocked_by":"input_filter"`
 ## Limits
 
 These rules were verified on 38 real lab records (32 in the final runs). The results describe those specific synthetic tests and are not evidence of general protection against prompt injection.
+
+## Rule file load order
+
+Wazuh loads rule files alphabetically. The content rules are children of rule 100000
+(defined in `ai-security-lab.xml`), so their file must sort after it. `ai-security-lab-content.xml`
+sorted before it (`-` is before `.`), and wazuh-logtest reported "Signature ID '100000' was not
+found ... Rule '100010' will be ignored". The file is therefore named `ai-security-lab_content.xml`.
+Remove any old `ai-security-lab-content.xml` from `/var/ossec/etc/rules/` when upgrading.
