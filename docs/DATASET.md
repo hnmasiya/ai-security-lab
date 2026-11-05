@@ -49,3 +49,7 @@ Events go to `logs/ai_assistant_dataset.jsonl` with the same field names as the 
 - The refusal flag (`refused_heuristic`) is a phrase match on the first 200 characters of a reply. It estimates over-refusal; it does not measure it exactly.
 - Repeats of one prompt are not independent, so intervals computed over repeated events understate uncertainty.
 - Small CPU-only models; results may not transfer to other models, sizes or hardware.
+
+## Formatting the results for the dissertation
+
+After a run, `python3 lab/table54.py logs/ai_assistant_dataset.jsonl --split heldout` prints the leaks-by-category table (one column per model and mode, with 95% intervals) and the benign over-blocking and over-refusal counts.
