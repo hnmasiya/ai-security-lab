@@ -124,6 +124,8 @@ def main():
     parser.add_argument("--limit", type=int, help="only the first N prompts (smoke test)")
     parser.add_argument("--dataset", default=str(DATASET))
     parser.add_argument("--log", default=str(DEFAULT_LOG), help="JSONL event log (default logs/ai_assistant_dataset.jsonl)")
+    parser.add_argument("--resume", action="store_true",
+                        help="skip events (model, prompt, mode, repeat) already in the log, to continue after a crash")
     parser.add_argument("--dry-run", action="store_true", help="no model calls; a fixed harmless reply is used")
     args = parser.parse_args()
 
@@ -133,12 +135,21 @@ def main():
     log_path = Path(args.log)
     log_path.parent.mkdir(parents=True, exist_ok=True)
     events = []
+    done = set()
+    if args.resume and log_path.exists():
+        for line in log_path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                old = json.loads(line)
+                done.add((old["model"], old["scenario_id"], old["mode"], old["repeat"]))
+        print(f"Resuming: {len(done)} events already in the log will be skipped.")
     try:
         with log_path.open("a", encoding="utf-8") as log:
             for model in models:
                 for repeat in range(1, args.repeats + 1):
                     for row in rows:
                         for defended in (False, True):
+                            if (model, row["id"], "defended" if defended else "baseline", repeat) in done:
+                                continue
                             event = run_one(model, row, defended, repeat, ask)
                             log.write(json.dumps(event, ensure_ascii=False) + "\n")
                             log.flush()
