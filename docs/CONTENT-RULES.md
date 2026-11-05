@@ -22,7 +22,7 @@ flag-based rules 100001 and 100002 are unchanged.
 | 100021 | 9 | A secret requested as a later step or part |
 
 The rules are generated from a table in `detection/build_content_rules.py`
-(`python3 detection/build_content_rules.py` rewrites `wazuh/rules/ai-security-lab-content.xml`).
+(`python3 detection/build_content_rules.py` rewrites `wazuh/rules/ai-security-lab_content.xml`).
 
 ## How they were evaluated
 

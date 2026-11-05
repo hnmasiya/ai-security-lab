@@ -5,7 +5,7 @@ Steps: Unicode NFKC (folds fullwidth forms), removal of zero-width and other inv
 mapping of common Cyrillic/Greek look-alikes to Latin, case folding, mapping of digit/symbol
 substitutions inside words (leetspeak), joining of letters separated by single spaces or dots
 ("i g n o r e"), and collapsing of whitespace. The result is logged as `prompt_normalised`, and
-the content-based Wazuh rules match on that field (wazuh/rules/ai-security-lab-content.xml).
+the content-based Wazuh rules match on that field (wazuh/rules/ai-security-lab_content.xml).
 """
 import re
 import unicodedata

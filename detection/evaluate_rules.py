@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Evaluate the content-based Wazuh rules (rules 100010-100021) on data/prompts.jsonl, offline.
 
-Reads the regular expressions from wazuh/rules/ai-security-lab-content.xml, normalises each prompt
+Reads the regular expressions from wazuh/rules/ai-security-lab_content.xml, normalises each prompt
 with detection/normalise.py and applies them with Python's `re`. This is an offline equivalent of
 Wazuh's PCRE2 matching, not Wazuh itself: confirm with wazuh-logtest on the manager before
 quoting the numbers as Wazuh results. Reports each detector (D1 scanner, D2 rules, D1 or D2) by
@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT / "detection"))
 import evaluate_scanner as es  # noqa: E402
 from normalise import normalise  # noqa: E402
 
-RULES_XML = ROOT / "wazuh" / "rules" / "ai-security-lab-content.xml"
+RULES_XML = ROOT / "wazuh" / "rules" / "ai-security-lab_content.xml"
 
 
 def load_rules(path=RULES_XML):
