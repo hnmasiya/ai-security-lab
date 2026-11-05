@@ -110,4 +110,5 @@ class Table54Tests(unittest.TestCase):
         self.assertIn("| All attacks |", text)
         self.assertIn("m baseline", text)
         self.assertIn("m defended", text)
+        self.assertIn("0 gave different results", text)
 
