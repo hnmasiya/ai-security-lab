@@ -76,3 +76,25 @@ Remove any old `ai-security-lab-content.xml` from `/var/ossec/etc/rules/` when u
 `alerts.json` (and, with `--indexer-container`, in the indexer). It needs the localfile
 block from `ossec-localfile.xml` in the manager's `ossec.conf`. It has not been run in the
 repository's CI because it needs the Docker stack.
+
+### Setup on the Docker manager
+
+```
+docker exec -u root single-node-wazuh.manager-1 bash -c '
+touch /var/ossec/logs/ai-security-lab.jsonl &&
+chown wazuh:wazuh /var/ossec/logs/ai-security-lab.jsonl &&
+chmod 660 /var/ossec/logs/ai-security-lab.jsonl &&
+grep -q "ai-security-lab.jsonl" /var/ossec/etc/ossec.conf || sed -i "0,/<\/ossec_config>/s##  <localfile>\n    <log_format>json</log_format>\n    <location>/var/ossec/logs/ai-security-lab.jsonl</location>\n  </localfile>\n</ossec_config>#" /var/ossec/etc/ossec.conf'
+docker exec single-node-wazuh.manager-1 /var/ossec/bin/wazuh-analysisd -t
+docker exec single-node-wazuh.manager-1 /var/ossec/bin/wazuh-control restart
+```
+
+### Run
+
+```
+python3 wazuh/measure_latency.py --container single-node-wazuh.manager-1 --events 20
+```
+
+Result of the run on 2026-11-06 (20 events, rule 100011): median 0.54 s, 95th percentile
+2.38 s, maximum 2.39 s from log write to `alerts.json`; no alerts lost. The indexer delay
+was not measured. Raw timings: `results/wazuh_latency_20261106_094040.csv`.
