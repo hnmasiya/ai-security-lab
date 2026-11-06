@@ -69,3 +69,10 @@ Wazuh loads rule files alphabetically. The content rules are children of rule 10
 sorted before it (`-` is before `.`), and wazuh-logtest reported "Signature ID '100000' was not
 found ... Rule '100010' will be ignored". The file is therefore named `ai-security-lab_content.xml`.
 Remove any old `ai-security-lab-content.xml` from `/var/ossec/etc/rules/` when upgrading.
+
+## End-to-end latency
+
+`measure_latency.py` appends test events to the monitored log and times the alert in
+`alerts.json` (and, with `--indexer-container`, in the indexer). It needs the localfile
+block from `ossec-localfile.xml` in the manager's `ossec.conf`. It has not been run in the
+repository's CI because it needs the Docker stack.
